@@ -12,6 +12,19 @@ def getUsableTableName(tableName):
     UsableTableName = UsableTableName[1:]
     UsableTableName = UsableTableName[0].upper()+UsableTableName[1:]
     return UsableTableName
+
+
+def getUsableTableNameWithoutLower(tableName):
+    UsableTableName = tableName
+    UsableTableName = UsableTableName.replace("'",'')
+    UsableTableName = UsableTableName.replace("(",'')
+    UsableTableName = UsableTableName.replace(")",'')
+    UsableTableName = UsableTableName.replace(",",'')
+    UsableTableName = UsableTableName[1:]
+
+    return UsableTableName
+
+
 def getUsableTableNameMin(tableName):
     UsableTableName = tableName
     UsableTableName = UsableTableName.replace("'",'')
@@ -91,7 +104,7 @@ while(i<numberTable):
     try:
         fichier = open('Views/'+getUsableTableName(str(tables[i]))+'/display.php', "w")
         fichier.write("<?php \n")
-        fichier.write("var_dump($this->$table"+getUsableTableName(str(tables[i]))+");")
+        fichier.write("var_dump($this->"+getUsableTableNameWithoutLower(str(tables[i]))+");")
     except OSError:
         pass
     try:
